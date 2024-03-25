@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+
+    <title>Salary Prediction System</title>
+</head>
+<body>
+
+<script>function predictSalary() {
+    // Get input values
+    const yearsExperience = document.getElementById('yearsExperience').value;
+    const educationLevel = document.getElementById('educationLevel').value;
+
+    // Perform salary prediction (you need to implement this logic)
+    const predictedSalary = predictSalaryFunction(yearsExperience, educationLevel);
+
+    // Display the result
+    const resultContainer = document.getElementById('result');
+    resultContainer.innerHTML = `Predicted Salary:Rs ${predictedSalary}`;
+}
+
+// Dummy function for prediction (replace with actual ML model integration)
+function predictSalaryFunction(yearsExperience, educationLevel) {
+    // Replace this with your actual prediction logic
+    const baseSalary = 50000;
+    const experienceMultiplier = 1000;
+    const educationMultiplier = 5000;
+
+    return baseSalary + yearsExperience * experienceMultiplier + educationLevel * educationMultiplier;
+}
+</script>
+    <style>body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    label {
+        margin-bottom: 8px;
+    }
+    
+    input, select {
+        padding: 10px;
+        margin-bottom: 16px;
+    }
+    
+    button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    </style>
+    <div class="container">
+        <h1>Salary Prediction System</h1>
+        <form id="salaryForm">
+            <label for="yearsExperience">Years of Experience:</label>
+            <input type="number" id="yearsExperience" required>
+
+            <label for="educationLevel">Education Level:</label>
+            <select id="educationLevel" required>
+                <option value="1">High School</option>
+                <option value="2">Bachelor's Degree</option>
+                <option value="3">Master's Degree</option>
+                <!-- Add more education levels as needed -->
+
+            </select>
+
+            <button type="button" onclick="predictSalary()">Predict Salary</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
