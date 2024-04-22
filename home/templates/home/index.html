@@ -3,13 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
-
     <title>Salary Prediction System</title>
 </head>
 <body>
 
-<script>function predictSalary() {
+    <script>
+         function populate(s1,s2)
+         {
+            var s1 = document.getElementById(s1);
+            var s2 = document.getElementById(s2);
+            s2.innerHTML = "";
+            if(s1.value == "1")
+            {
+                var optionArray = ["|", "4|MBBS","1|BDS","1|BAMS","2|BHMS"];
+            }
+            else if(s1.value == "2")
+            {
+                var optionArray = ["|", "1|High School","3|College", "5|PHD"];
+            }
+            else if(s1.value == "3")
+            {
+                var optionArray = ["|", "4|Bachelor","6|Masters"];
+            }
+            for(var option in optionArray)
+            {
+                var pair = optionArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                s2.options.add(newOption);
+            }
+        }
+
+function predictSalary() {
     // Get input values
     const yearsExperience = document.getElementById('yearsExperience').value;
     const educationLevel = document.getElementById('educationLevel').value;
@@ -26,12 +52,15 @@
 function predictSalaryFunction(yearsExperience, educationLevel) {
     // Replace this with your actual prediction logic
     const baseSalary = 50000;
-    const experienceMultiplier = 1000;
-    const educationMultiplier = 5000;
+    const educationMultiplier = 10000;
+    const experienceMultiplier = 5000;
 
     return baseSalary + yearsExperience * experienceMultiplier + educationLevel * educationMultiplier;
+    document.getElementById('educationLevel').addEventListener('change', predictSalary);
+
 }
 </script>
+
     <style>body {
         font-family: 'Arial', sans-serif;
         margin: 0;
@@ -62,7 +91,7 @@ function predictSalaryFunction(yearsExperience, educationLevel) {
         margin-bottom: 16px;
     }
     
-    button {
+    .button1 {
         padding: 10px;
         background-color: #4caf50;
         color: #fff;
@@ -70,9 +99,24 @@ function predictSalaryFunction(yearsExperience, educationLevel) {
         border-radius: 4px;
         cursor: pointer;
     }
+     
     
-    button:hover {
+    .button1:hover {
         background-color: #45a049;
+    }
+    
+    .button2 {
+        padding: 10px;
+        background-color: #3173c5;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+     
+    
+    .button2:hover {
+        background-color: #31619c;
     }
     
     #result {
@@ -80,27 +124,43 @@ function predictSalaryFunction(yearsExperience, educationLevel) {
         font-weight: bold;
     }
     </style>
+
+
+
     <div class="container">
         <h1>Salary Prediction System</h1>
-        <form id="salaryForm">
-            <label for="yearsExperience">Years of Experience:</label>
-            <input type="number" id="yearsExperience" required>
-
-            <label for="educationLevel">Education Level:</label>
-            <select id="educationLevel" required>
-                <option value="1">High School</option>
-                <option value="2">Bachelor's Degree</option>
-                <option value="3">Master's Degree</option>
-                <!-- Add more education levels as needed -->
-
+        {{n}}
+        <form id="salaryForm" method="post" action="{% url 'save_form' %}">
+            {% csrf_token %}
+            
+            <label for="">Education Type:</label>
+            <select id="educationType" name="educationType" onchange="populate(this.id,'educationLevel')" >
+                <option value="">Select</option>
+                <option value="1">Doctor</option>
+                <option value="2">Professor</option>
+                <option value="3">Engineer</option>
             </select>
 
-            <button type="button" onclick="predictSalary()">Predict Salary</button>
-        </form>
 
+            <label for="educationLevel">Education Level:</label>
+            <select id="educationLevel" name="educationLevel">
+                <!-- <option value="1">High School</option>
+                <option value="2">Bachelor's Degree</option>
+                <option value="3">Master's Degree</option> -->
+            </select>
+
+            <label for="yearsExperience">Years of Experience:</label>
+            <input type="number" id="yearsExperience" name="experience" required>
+
+        
+
+            <button class="button1" type="button" onclick="predictSalary()">Predict Salary</button><br>
+            <button type="submit" class="button2">Clear</button>
+        </form>
+ 
         <div id="result"></div>
     </div>
 
-    <script src="index.js"></script>
+    
 </body>
 </html>
